@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 [RequireComponent(typeof(Animator))]
-public abstract class Actor : MonoBehaviour
-{
+public abstract class Actor : MonoBehaviour {
+    //ネットから拾ってきた書き方(アニメーションのハッシュ値を登録しておくらしい)
+    public readonly int hashAttack = Animator.StringToHash("Attack");
+
 
     public enum HandState
     {
@@ -28,13 +31,15 @@ public abstract class Actor : MonoBehaviour
     public int AttackGu;
     public int AttackChoki;
     public int AttackPar;
-
+    
     public Animator Anim;
+
+    public bool IsWinner = false;
 
     protected void Start()
     {
         HP = 100; AttackGu = 7; AttackChoki = 13; AttackPar = 17;
-        Anim = this.gameObject.GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
     }
 
     //g : グー、c : チョキ、p : パー
