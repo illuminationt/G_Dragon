@@ -1,0 +1,23 @@
+﻿<Properties StartupConfiguration="{E5979C3D-07A3-92E8-B50E-7E57CF5B8ACB}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Fade/Scripts/Fade.cs">
+    <Files>
+      <File FileName="Assets/Scripts/TitleManager.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/Enemy.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Dragon.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BattleManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Actor.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SceneSequencer.cs" Line="11" Column="34" />
+      <File FileName="Assets/Scripts/FadePanel.cs" Line="62" Column="13" />
+      <File FileName="Assets/Scripts/WorldManager.cs" Line="16" Column="5" />
+      <File FileName="Assets/Fade/Scripts/Fade.cs" Line="1" Column="1" />
+      <File FileName="../FadeImage.cs" Line="33" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
