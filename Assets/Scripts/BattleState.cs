@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class BattleManager : MonoBehaviour {
+public partial class BattleManager : MonoBehaviour
+{
 
 
     //バトル始まる前？一応用意した。使わないかも。
-    public  class StateBeforeBattle : BattleState
+    public class StateBeforeBattle : BattleState
     {
-        public override BattleState Execute(Dragon dragon,Enemy enemy)
+        public override BattleState Execute(Dragon dragon, Enemy enemy)
         {
             BattleState next = this;
 
-
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                //仮
+                next = new StateDecideHand();
+            }
 
             return next;
         }
     }
 
     //プレイヤーがジャンケンの手を考えている状態。
-    public class StateDecideHand : BattleState{
+    public class StateDecideHand : BattleState
+    {
         //ジャンケンの勝者を保持しておく変数
         //まだ決まってないor 値が不要になったらUnknownを代入しておくこと。エラーチェックになる
         private enum Winner
@@ -30,8 +36,12 @@ public partial class BattleManager : MonoBehaviour {
         }
         private Winner m_winner;
 
+        public override void Enter(Dragon dragon, Enemy enemy)
+        {
+            Debug.Log("手を決めてください...G or C or P");
+        }
 
-        public override BattleState Execute(Dragon dragon,Enemy enemy)
+        public override BattleState Execute(Dragon dragon, Enemy enemy)
         {
             BattleState next = this;
 
@@ -40,13 +50,13 @@ public partial class BattleManager : MonoBehaviour {
             enemy.DecideHand();
 
             //両者ともに手を出し終わった。アニメーション（アクション）へGo
-            if(dragon.State==Actor.HandState.FINISH_DECIDE&&
+            if (dragon.State == Actor.HandState.FINISH_DECIDE &&
                 enemy.State == Actor.HandState.FINISH_DECIDE)
             {
-                dragon.State = enemy.State = Actor.HandState.ACTION;
+                dragon.State = enemy.State = Actor.HandState.DONT_DECIDE;
                 next = new StateAction();
             }
-            
+
 
 
             return next;
@@ -57,6 +67,7 @@ public partial class BattleManager : MonoBehaviour {
         public override void Exit(Dragon dragon, Enemy enemy)
         {
             CalculateDamage(ref dragon, ref enemy);
+            Debug.Log("Dragon : " + dragon.Action + " Enemy : " + enemy.Action);
         }
 
 
@@ -102,7 +113,7 @@ public partial class BattleManager : MonoBehaviour {
             }
             */
 
-            //この中でダメーCジを計算してしまう
+        //この中でダメーCジを計算してしまう
         private void CalculateDamage(ref Dragon dragon, ref Enemy enemy)
         {
             //ジャンケンの勝者判別
@@ -111,27 +122,27 @@ public partial class BattleManager : MonoBehaviour {
                 case Actor.Actions.Gu:
                     switch (enemy.Action)
                     {
-                        case Actor.Actions.Gu: ;                                 break;
-                        case Actor.Actions.Choki:  enemy.HP  -= dragon.AttackGu; break;
-                        case Actor.Actions.Par:    dragon.HP -= enemy.AttackPar; break;
+                        case Actor.Actions.Gu:; break;
+                        case Actor.Actions.Choki: enemy.HP -= dragon.AttackGu; break;
+                        case Actor.Actions.Par: dragon.HP -= enemy.AttackPar; break;
                         default: Debug.LogError("やばい"); break;
                     }
                     break;
                 case Actor.Actions.Choki:
                     switch (enemy.Action)
                     {
-                        case Actor.Actions.Gu:   dragon.HP -= enemy.AttackGu; break;
-                        case Actor.Actions.Choki:                   break;
-                        case Actor.Actions.Par:  enemy.HP  -= dragon.AttackChoki; break;
-                        default: Debug.LogError("やばい");break;
+                        case Actor.Actions.Gu: dragon.HP -= enemy.AttackGu; break;
+                        case Actor.Actions.Choki: break;
+                        case Actor.Actions.Par: enemy.HP -= dragon.AttackChoki; break;
+                        default: Debug.LogError("やばい"); break;
                     }
                     break;
                 case Actor.Actions.Par:
                     switch (enemy.Action)
                     {
-                        case Actor.Actions.Gu:   enemy.HP  -= dragon.AttackPar; break;
-                        case Actor.Actions.Choki:dragon.HP -= enemy.AttackChoki; break;
-                        case Actor.Actions.Par:                         break;
+                        case Actor.Actions.Gu: enemy.HP -= dragon.AttackPar; break;
+                        case Actor.Actions.Choki: dragon.HP -= enemy.AttackChoki; break;
+                        case Actor.Actions.Par: break;
                         default: Debug.LogError("やばい"); break;
                     }
                     break;
@@ -139,6 +150,7 @@ public partial class BattleManager : MonoBehaviour {
                     Debug.LogError("変な手が代入されているよ");
                     break;
             }
+
         }
 
     }
@@ -148,24 +160,28 @@ public partial class BattleManager : MonoBehaviour {
     public class StateAction : BattleState
     {
 
-        public override void Enter(Dragon dragon,Enemy enemy)
+        public override void Enter(Dragon dragon, Enemy enemy)
         {
             //アニメーション再生！
+            Debug.Log("Enter Animation");
         }
 
-        public override BattleState Execute(Dragon dragon,Enemy enemy)
+        public override BattleState Execute(Dragon dragon, Enemy enemy)
         {
             BattleState next = this;
-        
+
             //アニメーションが終わったらExitに入ろう。
-            
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                next = new StateDecideHand();
+            }
             return next;
         }
 
         //アニメーションが終わったら体力を見て死んでたらリザルトへGO
         public override void Exit(Dragon dragon, Enemy enemy)
         {
-            
+            Debug.Log("Dragon HP = " + dragon.HP + " , Enemy HP = " + enemy.HP);
         }
 
 
@@ -175,7 +191,7 @@ public partial class BattleManager : MonoBehaviour {
     {
         public override void Enter(Dragon dragon, Enemy enemy)
         {
-            
+
         }
 
         public override BattleState Execute(Dragon dragon, Enemy enemy)
@@ -190,9 +206,9 @@ public partial class BattleManager : MonoBehaviour {
 
         public override void Exit(Dragon dragon, Enemy enemy)
         {
-            
+
         }
     }
 
-    
+
 }
