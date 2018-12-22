@@ -4,11 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class TitleManager : MonoBehaviour {
 
+    [SerializeField] private string m_worldSceneName;
 
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Z))
+    private SceneSequencer sceneSequencer;
+
+    // Use this for initialization
+    void Start()
+    {
+        sceneSequencer = GameObject.Find("SceneSequencer").GetComponent<SceneSequencer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("World");
+            sceneSequencer.ChangeScene(m_worldSceneName);
         }
-	}
+    }
+
 }
