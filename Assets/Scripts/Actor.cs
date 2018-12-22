@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public abstract class Actor : MonoBehaviour
 {
 
@@ -28,9 +29,12 @@ public abstract class Actor : MonoBehaviour
     public int AttackChoki;
     public int AttackPar;
 
+    public Animator Anim;
+
     protected void Start()
     {
         HP = 100; AttackGu = 7; AttackChoki = 13; AttackPar = 17;
+        Anim = this.gameObject.GetComponent<Animator>();
     }
 
     //g : グー、c : チョキ、p : パー

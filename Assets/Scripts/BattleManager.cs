@@ -39,6 +39,17 @@ public partial class BattleManager : MonoBehaviour
         public virtual void Enter(Dragon dragon, Enemy enemy) { }
         public abstract BattleState Execute(Dragon dragon, Enemy enemy);
         public virtual void Exit(Dragon dragon, Enemy enemy) { }
+
+        protected enum Winner
+        {
+            Dragon,
+            Enemy,
+            Niether,
+            Unknown,
+        }
+        protected Winner m_winner;
+
+
     }
     private BattleState m_battleState;
 }
